@@ -1,11 +1,8 @@
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Mail, ArrowLeft, Send } from "lucide-react"
+import { Mail, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils";
+import ContactForm from "@/components/contact-form";
 
 export default function Contacto() {
   return (
@@ -50,88 +47,7 @@ export default function Contacto() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6 p-0">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="nombre" className="text-slate-300">
-                      Nombre
-                    </Label>
-                    <Input
-                      id="nombre"
-                      placeholder="Tu nombre completo"
-                      className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 focus:border-cyan-400"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="empresa" className="text-slate-300">
-                      Empresa (Opcional)
-                    </Label>
-                    <Input
-                      id="empresa"
-                      placeholder="Nombre de tu empresa"
-                      className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 focus:border-cyan-400"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-slate-300">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="tu@email.com"
-                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 focus:border-cyan-400"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="telefono" className="text-slate-300">
-                    Teléfono (Opcional)
-                  </Label>
-                  <Input
-                    id="telefono"
-                    type="tel"
-                    placeholder="+1 (555) 123-4567"
-                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 focus:border-cyan-400"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="asunto" className="text-slate-300">
-                    Asunto
-                  </Label>
-                  <select
-                    id="asunto"
-                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white focus:border-cyan-400 focus:outline-none"
-                  >
-                    <option value="">Selecciona un tema</option>
-                    <option value="hosting-compartido">Hosting Compartido</option>
-                    <option value="wordpress-hosting">WordPress Hosting</option>
-                    <option value="hosting-reseller">Hosting Reseller</option>
-                    <option value="soporte-tecnico">Soporte Técnico</option>
-                    <option value="facturacion">Facturación</option>
-                    <option value="ventas">Consulta de Ventas</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="mensaje" className="text-slate-300">
-                    Mensaje
-                  </Label>
-                  <Textarea
-                    id="mensaje"
-                    placeholder="Cuéntanos cómo podemos ayudarte..."
-                    rows={5}
-                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 focus:border-cyan-400 resize-none"
-                  />
-                </div>
-
-                <Button className="w-full cursor-pointer bg-gradient-to-r from-cyan-400 to-blue-400 hover:from-cyan-500 hover:to-blue-500 text-slate-900 font-semibold transition-all duration-30">
-                  Enviar Mensaje
-                  <Send className="ml-2 w-4 h-4" />
-                </Button>
+                <ContactForm />
               </CardContent>
             </Card>
 
