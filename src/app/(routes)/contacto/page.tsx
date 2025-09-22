@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Mail, Phone, Clock, MessageSquare, ArrowLeft, Send, Headphones, Globe, Zap } from "lucide-react"
+import { Mail, ArrowLeft, Send } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils";
 
