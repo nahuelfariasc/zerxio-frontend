@@ -1,84 +1,90 @@
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || 'http://localhost:1337';
+const apiUrl = (path: string) => {
+  const base = API_BASE.replace(/\/+$/, "");
+  return `${base}${path.startsWith("/") ? "" : "/"}${path}`;
+};
+
 export async function fetchHero() {
-    const res = await fetch("http://localhost:1337/api/hero", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      next: { revalidate: 60 }, // opcional si usás caching incremental
-    });
-  
-    if (!res.ok) throw new Error("Failed to fetch hero content");
-  
-    const data = await res.json();
-    return data.data; // el contenido está en data.data
+  const res = await fetch(apiUrl("/api/hero"), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    next: { revalidate: 60 }, // opcional si usás caching incremental
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch hero content");
+
+  const data = await res.json();
+  return data.data; // el contenido está en data.data
 }
 
 export async function fetchReasons() {
-    try {
-      const res = await fetch("http://localhost:1337/api/reasons?populate=features", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        next: { revalidate: 60 },
-      });
-    
-      if (!res.ok) {
-        const errorText = await res.text();
-        // console.error('Error fetching reasons:', res.status, errorText);
-        throw new Error(`Error ${res.status}: ${errorText}`);
-      }
+  try {
+    const res = await fetch(apiUrl("/api/reasons?populate=features"), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 60 },
+    });
 
-      const data = await res.json();
-      
-      // Validate the response structure
-      // Strapi returns data as an array of objects
-      if (!data.data || !Array.isArray(data.data)) {
-        // console.error('API response missing data array:', data);
-        throw new Error("API response missing data array");
-      }
-
-      // Obtener el primer item del array
-      const firstItem = data.data[0];
-      
-      if (!firstItem || !firstItem.title || !firstItem.description || !firstItem.features) {
-        // console.error('Estructura de datos inválida:', firstItem);
-        throw new Error("Estructura de datos inválida");
-      }
-
-      // Mapear los features para asegurar que tengan el formato correcto
-      // console.log('Features recibidos:', firstItem.features);
-      
-      const formattedFeatures = firstItem.features.map((feature: any) => {
-        // console.log('Procesando feature:', feature);
-        return {
-          id: feature.id,
-          icon: feature.icon || 'Rocket',
-          title: feature.title,
-          description: feature.description
-        };
-      });
-      
-      // console.log('Features formateados:', formattedFeatures);
-
-      // Devolver el objeto formateado
-      return {
-        id: firstItem.id,
-        documentId: firstItem.documentId || firstItem.id.toString(),
-        title: firstItem.title,
-        description: firstItem.description,
-        features: formattedFeatures,
-        createdAt: firstItem.createdAt,
-        updatedAt: firstItem.updatedAt,
-        publishedAt: firstItem.publishedAt
-      };
-    } catch (error) {
-      // console.error('Error in fetchReasons:', error);
-      throw error;
+    if (!res.ok) {
+      const errorText = await res.text();
+      // console.error('Error fetching reasons:', res.status, errorText);
+      throw new Error(`Error ${res.status}: ${errorText}`);
     }
+
+    const data = await res.json();
+    
+    // Validate the response structure
+    // Strapi returns data as an array of objects
+    if (!data.data || !Array.isArray(data.data)) {
+      // console.error('API response missing data array:', data);
+      throw new Error("API response missing data array");
+    }
+
+    // Obtener el primer item del array
+    const firstItem = data.data[0];
+    
+    if (!firstItem || !firstItem.title || !firstItem.description || !firstItem.features) {
+      // console.error('Estructura de datos inválida:', firstItem);
+      throw new Error("Estructura de datos inválida");
+    }
+
+    // Mapear los features para asegurar que tengan el formato correcto
+    // console.log('Features recibidos:', firstItem.features);
+    
+    const formattedFeatures = firstItem.features.map((feature: any) => {
+      // console.log('Procesando feature:', feature);
+      return {
+        id: feature.id,
+        icon: feature.icon || 'Rocket',
+        title: feature.title,
+        description: feature.description
+      };
+    });
+    
+    // console.log('Features formateados:', formattedFeatures);
+
+    // Devolver el objeto formateado
+    return {
+      id: firstItem.id,
+      documentId: firstItem.documentId || firstItem.id.toString(),
+      title: firstItem.title,
+      description: firstItem.description,
+      features: formattedFeatures,
+      createdAt: firstItem.createdAt,
+      updatedAt: firstItem.updatedAt,
+      publishedAt: firstItem.publishedAt
+    };
+  } catch (error) {
+    // console.error('Error in fetchReasons:', error);
+    throw error;
+  }
 }
 
 export async function fetchPlans() {
   try {
-    const res = await fetch("http://localhost:1337/api/plans", {
+    const res = await fetch(apiUrl("/api/plans"), {
       headers: {
         "Content-Type": "application/json",
       },
@@ -107,7 +113,7 @@ export async function fetchPlans() {
 
 export async function fetchBanners() {
   try {
-    const res = await fetch("http://localhost:1337/api/banners", {
+    const res = await fetch(apiUrl("/api/banners"), {
       headers: {
         "Content-Type": "application/json",
       },
@@ -137,7 +143,7 @@ export async function fetchBanners() {
 
 export async function fetchWordPressPlans() {
   try {
-    const res = await fetch("http://localhost:1337/api/wordpresses?populate=*", {
+    const res = await fetch(apiUrl("/api/wordpresses?populate=*"), {
       headers: {
         "Content-Type": "application/json",
       },
@@ -165,7 +171,7 @@ export async function fetchWordPressPlans() {
 
 export async function fetchResellerPlans() {
   try {
-    const res = await fetch("http://localhost:1337/api/resellers?populate=*", {
+    const res = await fetch(apiUrl("/api/resellers?populate=*"), {
       headers: {
         "Content-Type": "application/json",
       },
@@ -193,7 +199,7 @@ export async function fetchResellerPlans() {
 
 export async function fetchCompartidoPlans() {
   try {
-    const res = await fetch("http://localhost:1337/api/compartidos?populate=*", {
+    const res = await fetch(apiUrl("/api/compartidos?populate=*"), {
       headers: {
         "Content-Type": "application/json",
       },
