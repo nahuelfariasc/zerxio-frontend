@@ -44,7 +44,7 @@ export async function fetchReasons() {
 
     // Obtener el primer item del array
     const firstItem = data.data[0];
-    
+  
     if (!firstItem || !firstItem.title || !firstItem.description || !firstItem.features) {
       // console.error('Estructura de datos inválida:', firstItem);
       throw new Error("Estructura de datos inválida");
@@ -52,18 +52,20 @@ export async function fetchReasons() {
 
     // Mapear los features para asegurar que tengan el formato correcto
     // console.log('Features recibidos:', firstItem.features);
-    
-    const formattedFeatures = firstItem.features.map((feature: any) => {
-      // console.log('Procesando feature:', feature);
-      return {
-        id: feature.id,
-        icon: feature.icon || 'Rocket',
-        title: feature.title,
-        description: feature.description
-      };
-    });
-    
-    // console.log('Features formateados:', formattedFeatures);
+
+    type FeatureItem = {
+      id: number | string;
+      icon?: string | null;
+      title: string;
+      description: string;
+    };
+
+    const formattedFeatures = firstItem.features.map((feature: FeatureItem) => ({
+      id: feature.id,
+      icon: feature.icon || 'Rocket',
+      title: feature.title,
+      description: feature.description
+    }));
 
     // Devolver el objeto formateado
     return {
