@@ -104,7 +104,7 @@ export default function Header() {
             Hosting Compartido
           </Link>
           <Link 
-            href="/wordpress-hosting" 
+            href="/hosting-wordpress" 
             className="block py-2 text-slate-300 hover:text-white"
             onClick={() => setOpen(false)}
           >
