@@ -1,3 +1,4 @@
+import tailwindcssAnimate from 'tailwindcss-animate';
 export default {
   plugins: {
     '@tailwindcss/postcss': {
@@ -95,7 +96,7 @@ export default {
           },
         },
       },
-      plugins: [require("tailwindcss-animate")],
+      plugins: [tailwindcssAnimate],
     },
     'autoprefixer': {},
   },
